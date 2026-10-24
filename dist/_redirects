@@ -1,0 +1,10 @@
+# Single-page app fallback.
+#
+# Without this, every deep link (/admin, /admin/login, /admin/products/new)
+# returns Netlify's 404 page on a hard refresh or when opened directly, because
+# those paths do not exist as files on disk. React Router owns them instead, so
+# index.html is served and the router resolves the URL.
+#
+# The 200 status keeps it a rewrite rather than a redirect, so the browser keeps
+# the requested URL in the address bar.
+/*    /index.html   200

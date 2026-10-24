@@ -1,0 +1,481 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   FootballTrix design tokens
+   ========================================================================== */
+@theme {
+  --color-ink-950: #070B14;
+  --color-ink-900: #0B1220;
+  --color-ink-800: #111B2E;
+  --color-ink-700: #1B2740;
+  --color-ink-600: #2A3A56;
+  /* Muted body text: the step between "readable" and "placeholder". */
+  --color-ink-500: #56678A;
+  /* Light end of the same scale, used for surfaces, borders and muted text. */
+  --color-ink-400: #7C8CA6;
+  --color-ink-300: #A9B4C4;
+  --color-ink-200: #D5DCE5;
+  --color-ink-100: #E9EDF2;
+  --color-ink-50: #F4F6F9;
+
+  --color-lime-accent: #C8FF3D;
+  --color-lime-dark: #A6E020;
+  --color-pitch: #0E7C4A;
+  --color-flame: #FF4D4D;
+
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius-card: 1rem;
+
+  --shadow-lift: 0 18px 40px -18px rgb(11 18 32 / 0.45);
+  --shadow-card: 0 2px 10px -4px rgb(11 18 32 / 0.18);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ink-900 font-sans antialiased;
+  }
+
+  /* Sticky-header offset for in-page anchor jumps */
+  :target {
+    scroll-margin-top: 7rem;
+  }
+
+  ::selection {
+    background: var(--color-lime-accent);
+    color: var(--color-ink-950);
+  }
+}
+
+@layer components {
+  /* --- layout ---------------------------------------------------------- */
+  .container-x {
+    @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-10;
+  }
+
+  /* --- typography ------------------------------------------------------ */
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .heading-xl {
+    @apply font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold uppercase leading-[0.92] tracking-tight;
+  }
+
+  .heading-lg {
+    @apply font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase leading-[0.95] tracking-tight;
+  }
+
+  .heading-md {
+    @apply font-display text-2xl sm:text-3xl font-bold uppercase leading-none tracking-tight;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase
+           tracking-[0.18em] text-ink-600;
+  }
+
+  .eyebrow-accent {
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase
+           tracking-[0.18em] text-lime-dark;
+  }
+
+  /* --- buttons --------------------------------------------------------- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold
+           whitespace-nowrap select-none transition-all duration-200
+           disabled:pointer-events-none disabled:opacity-50
+           bg-lime-accent px-6 py-3 text-ink-950
+           shadow-[0_10px_30px_-12px_rgba(200,255,61,0.7)]
+           hover:-translate-y-0.5 hover:bg-lime-dark active:translate-y-0;
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold
+           whitespace-nowrap select-none transition-all duration-200
+           disabled:pointer-events-none disabled:opacity-50
+           bg-ink-950 px-6 py-3 text-white
+           hover:-translate-y-0.5 hover:bg-ink-800 active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold
+           whitespace-nowrap select-none transition-all duration-200
+           disabled:pointer-events-none disabled:opacity-50
+           border-2 border-ink-950 px-6 py-2.5 text-ink-950
+           hover:bg-ink-950 hover:text-white;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold
+           whitespace-nowrap select-none transition-all duration-200
+           disabled:pointer-events-none disabled:opacity-50
+           border-2 border-ink-200 px-6 py-2.5 text-ink-900
+           hover:border-ink-950;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .btn-outline-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold
+           whitespace-nowrap select-none transition-all duration-200
+           disabled:pointer-events-none disabled:opacity-50
+           border-2 border-flame/50 px-6 py-2.5 text-flame
+           hover:border-flame hover:bg-flame hover:text-white;
+  }
+
+  /* Square icon-only action button, used throughout the admin tables. */
+  .icon-btn {
+    @apply flex h-9 w-9 items-center justify-center rounded-lg border border-ink-200
+           bg-white text-ink-700 transition-colors
+           hover:border-ink-950 hover:text-ink-950
+           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-dark;
+  }
+
+  .icon-btn-danger {
+    @apply hover:border-flame hover:text-flame;
+  }
+
+  /* --- forms ----------------------------------------------------------- */
+  .checkbox {
+    @apply h-4 w-4 shrink-0 cursor-pointer rounded border-2 border-ink-300 text-ink-950
+           accent-ink-950 transition-colors focus:outline-none focus:ring-2 focus:ring-ink-950/10;
+  }
+  .field {
+    @apply w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm
+           text-ink-900 placeholder:text-ink-600/50
+           focus:outline-none focus:border-ink-950 focus:ring-2 focus:ring-ink-950/10
+           transition-colors;
+  }
+
+  .field-error {
+    @apply border-flame focus:border-flame focus:ring-flame/15;
+  }
+
+  .label {
+    @apply block text-xs font-bold uppercase tracking-wider text-ink-700 mb-1.5;
+  }
+
+  /* --- surfaces -------------------------------------------------------- */
+  .card {
+    @apply rounded-2xl border border-ink-200/70 bg-white;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1
+           text-[11px] font-bold uppercase tracking-wider;
+  }
+
+  /* --- section rhythm -------------------------------------------------- */
+  .section {
+    @apply py-14 sm:py-20;
+  }
+
+  .section-tight {
+    @apply py-10 sm:py-14;
+  }
+
+  /* --- focus ring for keyboard users ----------------------------------- */
+  .focus-ring {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-dark;
+  }
+
+  /* --- accessibility ---------------------------------------------------- */
+  /* Off-screen until focused, so keyboard users can jump past the header. */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]
+           focus:rounded-full focus:bg-ink-950 focus:px-5 focus:py-3
+           focus:text-sm focus:font-semibold focus:text-white;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar on horizontal rails without losing scrollability */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .edge-fade {
+    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes ftx-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: ftx-marquee 32s linear infinite;
+}
+
+@keyframes ftx-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-rise {
+  animation: ftx-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ftx-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade {
+  animation: ftx-fade 0.25s ease-out both;
+}
+
+@keyframes ftx-slide-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: ftx-slide-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ftx-slide-in-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-slide-in-left {
+  animation: ftx-slide-in-left 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ftx-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+  animation: ftx-shimmer 1.6s infinite;
+}
+
+/* Respect users who ask the OS to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Slow vertical float for hero artwork */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+
+/* ==========================================================================
+   Admin panel
+
+   The admin shell carries its own component classes rather than sprinkling
+   `dark:` variants across every page. Each class resolves light and dark in
+   one definition, so a page author writes `.adm-input` and cannot accidentally
+   ship a control that disappears in dark mode.
+   ========================================================================== */
+
+/* Tailwind v4 defaults `dark:` to prefers-color-scheme; the admin panel uses an
+   explicit toggle instead, so it must key off the class we set on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* Primitives are declared with `@utility` rather than `@layer components`
+   because `@apply` in Tailwind v4 can only resolve real utilities. That lets
+   the composed classes below (`.adm-select`, `.adm-btn-dark`, `.adm-badge-ok`)
+   fold a base into themselves instead of requiring two class names in markup. */
+@utility adm-input {
+  @apply w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm
+         text-ink-900 placeholder:text-ink-600/50 transition-colors
+         focus:border-ink-950 focus:outline-none focus:ring-2 focus:ring-ink-950/10
+         dark:border-ink-700 dark:bg-ink-800 dark:text-white
+         dark:placeholder:text-ink-500 dark:focus:border-lime-accent
+         dark:focus:ring-lime-accent/20;
+}
+
+@utility adm-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5
+         text-sm font-semibold whitespace-nowrap transition-all
+         disabled:pointer-events-none disabled:opacity-50
+         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-dark;
+}
+
+@utility adm-badge {
+  @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1
+         text-[11px] font-bold whitespace-nowrap uppercase tracking-wide;
+}
+
+@layer components {
+  /* --- shell ------------------------------------------------------------ */
+  .adm-page {
+    @apply min-h-screen bg-ink-50 dark:bg-ink-950;
+  }
+
+  .adm-card {
+    @apply rounded-2xl border border-ink-200/80 bg-white shadow-[0_1px_2px_rgb(11_18_32/0.04)]
+           dark:border-ink-800 dark:bg-ink-900 dark:shadow-none;
+  }
+
+  .adm-card-pad {
+    @apply p-4 sm:p-5;
+  }
+
+  /* --- headings --------------------------------------------------------- */
+  .adm-title {
+    @apply font-display text-2xl font-extrabold uppercase leading-none tracking-tight
+           text-ink-950 sm:text-3xl dark:text-white;
+  }
+
+  .adm-lede {
+    @apply mt-1.5 text-sm leading-relaxed text-ink-600 dark:text-ink-400;
+  }
+
+  .adm-card-title {
+    @apply text-[11px] font-bold uppercase tracking-[0.16em]
+           text-ink-500 dark:text-ink-400;
+  }
+
+  /* --- forms ------------------------------------------------------------ */
+  .adm-label {
+    @apply mb-1.5 block text-xs font-bold uppercase tracking-wider
+           text-ink-700 dark:text-ink-300;
+  }
+
+  .adm-select {
+    /* The SVG data URI is URL-encoded with no literal spaces: `@apply` splits
+       its candidates on whitespace, so a raw one would be torn apart. */
+    @apply adm-input cursor-pointer appearance-none bg-no-repeat pr-9
+           bg-[length:14px_14px] bg-[right_0.75rem_center]
+           bg-[url('data:image/svg+xml;utf8,<svg%20xmlns="http://www.w3.org/2000/svg"%20width="14"%20height="14"%20fill="none"%20stroke="%237C8CA6"%20stroke-width="2"%20stroke-linecap="round"%20stroke-linejoin="round"><path%20d="M3%205l4%204%204-4"/></svg>')];
+  }
+
+  .adm-textarea {
+    @apply adm-input min-h-24 resize-y;
+  }
+
+  /* --- buttons ---------------------------------------------------------- */
+  .adm-btn-dark {
+    @apply adm-btn bg-ink-950 text-white hover:bg-ink-800
+           dark:bg-lime-accent dark:text-ink-950 dark:hover:bg-lime-dark;
+  }
+
+  .adm-btn-outline {
+    @apply adm-btn border border-ink-300 text-ink-800 hover:border-ink-950 hover:bg-white
+           dark:border-ink-700 dark:text-ink-200 dark:hover:border-ink-500 dark:hover:bg-ink-800;
+  }
+
+  .adm-btn-danger {
+    @apply adm-btn border border-flame/40 text-flame hover:bg-flame hover:text-white
+           dark:border-flame/40;
+  }
+
+  .adm-icon-btn {
+    @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border
+           border-ink-200 bg-white text-ink-600 transition-colors
+           hover:border-ink-950 hover:text-ink-950
+           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-dark
+           dark:border-ink-700 dark:bg-ink-800 dark:text-ink-300
+           dark:hover:border-lime-accent dark:hover:text-lime-accent;
+  }
+
+  /* --- tables ----------------------------------------------------------- */
+  .adm-table-wrap {
+    @apply overflow-x-auto;
+  }
+
+  .adm-table {
+    @apply w-full min-w-[46rem] border-collapse text-left text-sm;
+  }
+
+  .adm-th {
+    @apply border-b border-ink-200 bg-ink-50/70 px-4 py-3 text-[11px] font-bold
+           uppercase tracking-wider whitespace-nowrap text-ink-500
+           dark:border-ink-800 dark:bg-ink-800/60 dark:text-ink-400;
+  }
+
+  .adm-td {
+    @apply border-b border-ink-100 px-4 py-3 align-middle text-ink-800
+           dark:border-ink-800 dark:text-ink-200;
+  }
+
+  .adm-tr-hover {
+    @apply transition-colors hover:bg-ink-50/80 dark:hover:bg-ink-800/50;
+  }
+
+  /* --- badge tones ------------------------------------------------------ */
+  .adm-badge-neutral {
+    @apply adm-badge bg-ink-100 text-ink-700 dark:bg-ink-800 dark:text-ink-300;
+  }
+  .adm-badge-ok {
+    @apply adm-badge bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300;
+  }
+  .adm-badge-warn {
+    @apply adm-badge bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300;
+  }
+  .adm-badge-danger {
+    @apply adm-badge bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300;
+  }
+  .adm-badge-info {
+    @apply adm-badge bg-sky-50 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300;
+  }
+  .adm-badge-accent {
+    @apply adm-badge bg-lime-accent/20 text-ink-950 dark:bg-lime-accent/25 dark:text-lime-accent;
+  }
+
+  /* --- sidebar ---------------------------------------------------------- */
+  .adm-navlink {
+    @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold
+           text-ink-300 transition-colors
+           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-dark
+           hover:bg-white/5 hover:text-white;
+  }
+
+  .adm-navlink-active {
+    @apply bg-lime-accent/12 text-lime-accent hover:bg-lime-accent/12 hover:text-lime-accent;
+  }
+
+  /* --- misc ------------------------------------------------------------- */
+  .adm-muted {
+    @apply text-xs text-ink-500 dark:text-ink-400;
+  }
+
+  .adm-divider {
+    @apply border-t border-ink-200 dark:border-ink-800;
+  }
+
+  /* Native select chevrons are unreadable on the dark input background. */
+  .dark select.adm-select option {
+    background-color: var(--color-ink-800);
+    color: var(--color-ink-50);
+  }
+}

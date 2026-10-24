@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0B1220" />
+    <title>FootballTrix — Premium Football Jerseys in Bangladesh</title>
+    <meta
+      name="description"
+      content="FootballTrix — premium football jerseys for every fan. Club, international and World Cup kits with cash on delivery across Bangladesh."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      /* Apply the admin panel's saved colour theme before first paint so a
+         dark-mode admin never sees a white flash. Scoped to /admin so the
+         storefront (which has no dark styles) is untouched. This reads a UI
+         preference only — it grants no access, the guard does that. */
+      (function () {
+        if (location.pathname.indexOf('/admin') !== 0) return;
+        try {
+          var t = localStorage.getItem('ftx.admin.theme');
+          if (t !== 'dark' && t !== 'light') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (t === 'dark') document.documentElement.classList.add('dark');
+          document.documentElement.style.colorScheme = t;
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-DjziN5-t.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/supabase-2foeRH8A.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BQ9ZwKI_.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
